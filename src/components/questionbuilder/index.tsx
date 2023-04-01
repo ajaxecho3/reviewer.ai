@@ -17,13 +17,13 @@ const QuestionBuilder = () => {
   const [loading, setLoading] = useState(false)
 
   const handleGenerateQuestion = async () => {
-
+// + 'and along with their answers in JSON format' 
     setLoading(true)
     await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
-        { "role": "system", "content": "You are a questioner writer" },
-        { role: 'user', content: promtMessage + 'and along with their answers in JSON format' }
+        { "role": "system", "content": "You are a QA Tester" },
+        { role: 'user', content: promtMessage }
       ]
     })
       .then((response) => {
