@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Configuration, OpenAIApi } from 'openai'
 import { type Message } from '~/types/openai.interface'
+import ReactMarkdown from 'react-markdown'
 const config = new Configuration({
 
   apiKey: process.env.NEXT_PUBLIC_OPENAI_SECRET
@@ -21,9 +22,10 @@ const QuestionBuilder = () => {
     setLoading(true)
     await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
+
       messages: [
         { "role": "system", "content": "You are a QA Tester" },
-        { role: 'user', content: promtMessage }
+        { role: 'user', content: `Format the data should be Markdown: ${promtMessage}}` }
       ]
     })
       .then((response) => {
@@ -69,9 +71,11 @@ const QuestionBuilder = () => {
           <button className=' border rounded-md px-2 py-1 bg-warning-700 text-white'>Reset</button>
         </div>
       </div>
-      <div className="w-3/4 mx-auto">
+      <div className="w-3/4 mx-auto text-left">
         {
-          loading ? <p>Loading....</p> : content
+          loading ? <p>Loading....</p> : <ReactMarkdown>
+            {content}
+          </ReactMarkdown>
         }
 
       </div>
